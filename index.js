@@ -25,20 +25,25 @@ startButton.onclick = function () {
             button.textContent = copyQuestionList[questionIndex].answers[answerIndex].text
             button.onclick = function () {
                 if (copyQuestionList[questionIndex].answers[answerIndex].isCorrect) {
-                    alert('Вы ответили правильно')
                     correctAnswers++
-                } else alert('Не верный ответ')
-                answerList.innerHTML = ''
-                copyQuestionList.splice(randomIndex, 1)
-
-                if (copyQuestionList.length !== 0) getQuestion()
-                else {
-                    answerList.remove()
-                    textBox.textContent = `Вы ответили правильно на ${correctAnswers} вопросов`
-                    startButton.textContent = 'Перезапустить'
-                    startButton.style.margin = '50px 0 0 0'
-                    contentSection.appendChild(startButton)
+                    button.style.background = '#4CAF50'
+                    button.style.borderColor = '#4CAF50'
+                } else {
+                    button.style.background = '#FF4C43'
+                    button.style.borderColor = '#FF4C43'
                 }
+                setTimeout(() => {
+                    answerList.innerHTML = ''
+                    copyQuestionList.splice(randomIndex, 1)
+                    if (copyQuestionList.length !== 0) getQuestion()
+                    else {
+                        answerList.remove()
+                        textBox.textContent = `Вы ответили правильно на ${correctAnswers} из ${questionList.length} вопросов (${Math.round(100 / questionList.length * correctAnswers)}%)`
+                        startButton.textContent = 'Перезапустить'
+                        startButton.style.margin = '50px 0 0 0'
+                        contentSection.appendChild(startButton)
+                    }
+                }, 500)
             }
 
             answer.appendChild(button)
