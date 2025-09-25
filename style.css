@@ -13,6 +13,17 @@
 body {
     background: bisque;
     font-family: 'Open Sans';
+    transition: 0.5s;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 20px;
+    height: 100px;
+    padding: 0 50px;
+    font-size: 20px;
 }
 
 main {
@@ -22,7 +33,6 @@ main {
 }
 
 h1 {
-    margin: 80px 0 0 0;
     font-size: 64px;
     letter-spacing: 2px;
 }
@@ -35,24 +45,74 @@ ul {
     list-style: none;
 }
 
+li {
+    display: flex;
+    flex-basis: 25%;
+}
+
 button {
-    min-width: 200px;
+    min-width: 220px;
     padding: 13px 25px;
     border: medium solid teal;
     font-family: inherit;
     font-size: 28px;
     background: transparent;
+    color: inherit;
     cursor: pointer;
 }
 
 #start-button {
-    width: 300px;
     margin: 200px 0 0 0;
     font-size: 35px;
 }
 
+.dark-theme {
+    background: black;
+    color: bisque;
+}
+
+.switch {
+    position: relative;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background-color: #CCC;
+    transition: 0.4s;
+    border-radius: 34px;
+    cursor: pointer;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    left: 4px;
+    bottom: 4px;
+    background: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #4CAF50;
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
 .text {
-    margin: 200px 0 0 0;
+    min-height: 120px;
+    margin: 180px 0 0 0;
     font-size: 42px;
     letter-spacing: 1px;
 }
