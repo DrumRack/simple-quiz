@@ -14,6 +14,7 @@ startButton.onclick = function () {
     getQuestion()
 
     function getQuestion() {
+        let blockUI = false
         const randomIndex = Math.floor(Math.random() * copyQuestionList.length)
         textBox.textContent = copyQuestionList[randomIndex].question
         for (let i = 0; i <= 3; i++) getAnswer(randomIndex, i)
@@ -24,6 +25,7 @@ startButton.onclick = function () {
 
             button.textContent = copyQuestionList[questionIndex].answers[answerIndex].text
             button.onclick = function () {
+                if (blockUI) return
                 if (copyQuestionList[questionIndex].answers[answerIndex].isCorrect) {
                     correctAnswers++
                     button.style.background = '#4CAF50'
@@ -32,6 +34,7 @@ startButton.onclick = function () {
                     button.style.background = '#FF4C43'
                     button.style.borderColor = '#FF4C43'
                 }
+                blockUI = true
                 setTimeout(() => {
                     answerList.innerHTML = ''
                     copyQuestionList.splice(randomIndex, 1)

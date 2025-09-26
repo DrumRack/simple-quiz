@@ -76,6 +76,18 @@ h1 {
     letter-spacing: 2px;
 }
 
+#start-button {
+    margin: 200px 0 0 0;
+    font-size: 35px;
+}
+
+.text {
+    min-height: 120px;
+    margin: 180px 0 0 0;
+    font-size: 42px;
+    letter-spacing: 1px;
+}
+
 ul {
     display: flex;
     justify-content: center;
@@ -98,16 +110,4 @@ button {
     background: transparent;
     color: inherit;
     cursor: pointer;
-}
-
-#start-button {
-    margin: 200px 0 0 0;
-    font-size: 35px;
-}
-
-.text {
-    min-height: 120px;
-    margin: 180px 0 0 0;
-    font-size: 42px;
-    letter-spacing: 1px;
 }
