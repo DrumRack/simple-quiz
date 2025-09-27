@@ -31,14 +31,14 @@ startButton.onclick = function () {
         }
 
         function getAnswer(answerIndex) {
-            const answer = document.createElement('li')
-            const button = document.createElement('button')
+            const answerListItem = document.createElement('li')
+            const answerButton = document.createElement('button')
 
-            button.textContent = copyQuestionList[randomIndex].answers[answerIndex].text
-            button.onclick = processAnswer.bind(null, answerIndex)
+            answerButton.textContent = copyQuestionList[randomIndex].answers[answerIndex].text
+            answerButton.onclick = processAnswer.bind(null, answerIndex)
 
-            answer.appendChild(button)
-            answerList.appendChild(answer)
+            answerListItem.appendChild(answerButton)
+            answerList.appendChild(answerListItem)
         }
 
         function processAnswer(answerIndex, event) {
@@ -80,7 +80,7 @@ startButton.onclick = function () {
             function answerCheck(targetType) {
                 switch (targetType) {
                     case 'INPUT':
-                        return copyQuestionList[randomIndex].answers.includes(event.target.value)
+                        return copyQuestionList[randomIndex].answers.includes(event.target.value.toLowerCase())
                     case 'BUTTON':
                         return copyQuestionList[randomIndex].answers[answerIndex].isCorrect
                 }
