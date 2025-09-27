@@ -9,7 +9,7 @@ const questionList = [
         ]
     },
     {
-        question: 'Какой тег в HTML используется для создания гиперссылки?',
+        question: 'Какой тег используется для создания гиперссылки?',
         answers: [
             {text: '<link>', isCorrect: false},
             {text: '<a>', isCorrect: true},
@@ -61,5 +61,17 @@ const questionList = [
             {text: 'css', isCorrect: false},
             {text: 'link-style', isCorrect: false}
         ]
+    },
+    {
+        question: 'Какой тег используется для создания абзаца текста?',
+        answers: ['<p>', 'p']
+    },
+    {
+        question: 'Какой атрибут используется для указания альтернативного текста изображения тега <img>?',
+        answers: ['alt']
+    },
+    {
+        question: 'Какой тег используется для создания нумерованного списка?',
+        answers: ['<ol>', 'ol']
     }
 ]

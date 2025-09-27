@@ -90,7 +90,6 @@ h1 {
 
 ul {
     display: flex;
-    justify-content: center;
     gap: 30px;
     margin: 50px 0 0 0;
     list-style: none;
@@ -98,16 +97,26 @@ ul {
 
 li {
     display: flex;
+    justify-content: center;
     flex-basis: 25%;
 }
 
 button {
     min-width: 220px;
     padding: 13px 25px;
-    border: medium solid teal;
     font-family: inherit;
     font-size: 28px;
+    border: medium solid teal;
     background: transparent;
     color: inherit;
     cursor: pointer;
+}
+
+.answer-input {
+    margin: 50px 0 0 0;
+    padding: 3px;
+    font-family: inherit;
+    font-size: 28px;
+    border: medium solid teal;
+    outline: none;
 }

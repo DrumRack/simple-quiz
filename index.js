@@ -2,55 +2,89 @@ const contentSection = document.getElementById('content')
 const startButton = document.getElementById('start-button')
 const textBox = document.createElement('div')
 const answerList = document.createElement('ul')
+const answerInput = document.createElement('input')
 let correctAnswers
 
 textBox.classList.add('text')
+answerInput.classList.add('answer-input')
+
 startButton.onclick = function () {
     const copyQuestionList = [...questionList]
     correctAnswers = 0
     contentSection.appendChild(textBox)
-    contentSection.appendChild(answerList)
     startButton.remove()
     getQuestion()
 
     function getQuestion() {
         let blockUI = false
         const randomIndex = Math.floor(Math.random() * copyQuestionList.length)
+        const isInputAnswer = typeof copyQuestionList[randomIndex].answers[0] === 'string'
         textBox.textContent = copyQuestionList[randomIndex].question
-        for (let i = 0; i <= 3; i++) getAnswer(randomIndex, i)
 
-        function getAnswer(questionIndex, answerIndex) {
+        if (isInputAnswer) {
+            contentSection.appendChild(answerInput)
+            answerInput.focus()
+            answerInput.onchange = processAnswer.bind(null, null)
+        } else {
+            contentSection.appendChild(answerList)
+            for (let i = 0; i <= 3; i++) getAnswer(i)
+        }
+
+        function getAnswer(answerIndex) {
             const answer = document.createElement('li')
             const button = document.createElement('button')
 
-            button.textContent = copyQuestionList[questionIndex].answers[answerIndex].text
-            button.onclick = function () {
-                if (blockUI) return
-                if (copyQuestionList[questionIndex].answers[answerIndex].isCorrect) {
-                    correctAnswers++
-                    button.style.background = '#4CAF50'
-                    button.style.borderColor = '#4CAF50'
-                } else {
-                    button.style.background = '#FF4C43'
-                    button.style.borderColor = '#FF4C43'
-                }
-                blockUI = true
-                setTimeout(() => {
-                    answerList.innerHTML = ''
-                    copyQuestionList.splice(randomIndex, 1)
-                    if (copyQuestionList.length !== 0) getQuestion()
-                    else {
-                        answerList.remove()
-                        textBox.textContent = `Вы ответили правильно на ${correctAnswers} из ${questionList.length} вопросов (${Math.round(100 / questionList.length * correctAnswers)}%)`
-                        startButton.textContent = 'Перезапустить'
-                        startButton.style.margin = '50px 0 0 0'
-                        contentSection.appendChild(startButton)
-                    }
-                }, 500)
-            }
+            button.textContent = copyQuestionList[randomIndex].answers[answerIndex].text
+            button.onclick = processAnswer.bind(null, answerIndex)
 
             answer.appendChild(button)
             answerList.appendChild(answer)
+        }
+
+        function processAnswer(answerIndex, event) {
+            if (blockUI) return
+            const targetType = event.target.tagName
+            const isAnswerCorrect = answerCheck(targetType)
+
+            if (isAnswerCorrect) {
+                correctAnswers++
+                event.target.style.background = '#4CAF50'
+                event.target.style.borderColor = '#4CAF50'
+            } else {
+                event.target.style.background = '#FF4C43'
+                event.target.style.borderColor = '#FF4C43'
+            }
+            blockUI = true
+
+            setTimeout(() => {
+                if (targetType === 'INPUT') {
+                    event.target.remove()
+                    event.target.value = ''
+                    event.target.style = ''
+                }
+                if (targetType === 'BUTTON') {
+                    event.target.parentElement.parentElement.remove()
+                    event.target.parentElement.parentElement.innerHTML = ''
+                }
+                copyQuestionList.splice(randomIndex, 1)
+
+                if (copyQuestionList.length !== 0) getQuestion()
+                else {
+                    textBox.textContent = `Вы ответили правильно на ${correctAnswers} из ${questionList.length} вопросов (${Math.round(100 / questionList.length * correctAnswers)}%)`
+                    startButton.textContent = 'Перезапустить'
+                    startButton.style.margin = '50px 0 0 0'
+                    contentSection.appendChild(startButton)
+                }
+            }, 500)
+
+            function answerCheck(targetType) {
+                switch (targetType) {
+                    case 'INPUT':
+                        return copyQuestionList[randomIndex].answers.includes(event.target.value)
+                    case 'BUTTON':
+                        return copyQuestionList[randomIndex].answers[answerIndex].isCorrect
+                }
+            }
         }
     }
 }
